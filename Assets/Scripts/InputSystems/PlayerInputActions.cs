@@ -53,6 +53,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ModeSwitch"",
+                    ""type"": ""Button"",
+                    ""id"": ""37817ef4-04b4-4a66-b498-8f0456cbf296"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -154,6 +163,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Separate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb7749c6-5171-4bf7-bb03-c0a762a71283"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ModeSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -165,6 +185,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Separate = m_Player.FindAction("Separate", throwIfNotFound: true);
+        m_Player_ModeSwitch = m_Player.FindAction("ModeSwitch", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -234,6 +255,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Separate;
+    private readonly InputAction m_Player_ModeSwitch;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -241,6 +263,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Separate => m_Wrapper.m_Player_Separate;
+        public InputAction @ModeSwitch => m_Wrapper.m_Player_ModeSwitch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -259,6 +282,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Separate.started += instance.OnSeparate;
             @Separate.performed += instance.OnSeparate;
             @Separate.canceled += instance.OnSeparate;
+            @ModeSwitch.started += instance.OnModeSwitch;
+            @ModeSwitch.performed += instance.OnModeSwitch;
+            @ModeSwitch.canceled += instance.OnModeSwitch;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -272,6 +298,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Separate.started -= instance.OnSeparate;
             @Separate.performed -= instance.OnSeparate;
             @Separate.canceled -= instance.OnSeparate;
+            @ModeSwitch.started -= instance.OnModeSwitch;
+            @ModeSwitch.performed -= instance.OnModeSwitch;
+            @ModeSwitch.canceled -= instance.OnModeSwitch;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -294,5 +323,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSeparate(InputAction.CallbackContext context);
+        void OnModeSwitch(InputAction.CallbackContext context);
     }
 }

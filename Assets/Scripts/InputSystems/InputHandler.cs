@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
 
     public Vector2 Move { get; private set; }
     public bool Jump { get; private set; }
+    public bool ModeSwitch { get; private set; } // Qキーの状態
 
     private PlayerInputActions actions;
 
@@ -30,6 +31,12 @@ public class InputHandler : MonoBehaviour
         actions.Player.Move.canceled += ctx => Move = Vector2.zero;
         actions.Player.Jump.performed += ctx => Jump = true;
         actions.Player.Jump.canceled += ctx => Jump = false;
+    }
+
+    void Update()
+    {
+        // Qキー（ModeSwitchアクション）が押された瞬間を検知
+        ModeSwitch = actions.Player.ModeSwitch.WasPressedThisFrame();
     }
 
     private void OnDestroy()

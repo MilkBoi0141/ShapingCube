@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpInput;
     private bool isGrounded;
+    public PlayerState currentState = PlayerState.Normal;
 
     void Start()
     {
@@ -23,6 +24,12 @@ public class PlayerMove : MonoBehaviour
         // 入力取得
         moveInput = InputHandler.Instance.Move; // Vector2 (x:左右, y:前後)
         jumpInput = InputHandler.Instance.Jump; // bool
+
+        // Qキーで状態切り替え
+        if (InputHandler.Instance.ModeSwitch)
+        {
+            currentState = currentState == PlayerState.Normal ? PlayerState.Combine : PlayerState.Normal;
+        }
 
         // ジャンプ入力
         if (jumpInput && isGrounded)
