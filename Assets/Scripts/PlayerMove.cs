@@ -55,10 +55,6 @@ public class PlayerMove : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // 地面判定
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        isGrounded = true;
     }
 }
